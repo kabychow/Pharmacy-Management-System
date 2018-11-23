@@ -65,7 +65,7 @@ void login() {
         
         user_index = User::login(username, password);
         
-        if (user_index > 0) {
+        if (user_index >= 0) {
             auto user = User::users.at(user_index);
             std::cout << std::endl << "Logged in with as " << user.name << " [" << user.role << "]" << std::endl;
             if (user.role == User::ROLE_ADMIN) admin_menu();

@@ -3,8 +3,7 @@
 
 #include "Medicine.hpp"
 
-class OrderItem {
-public:
+struct OrderItem {
     std::string medicine_name;
     double medicine_price;
     int quantity;
