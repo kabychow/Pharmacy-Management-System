@@ -114,7 +114,7 @@ void register_customer() {
 void edit_profile() {
     std::cout << std::endl;
     
-    auto user = User::users.at(user_index);
+    auto &user = User::users.at(user_index);
     
     std::cout << "Enter your name [" << user.name << "]: ";
     std::string name = get_input(true);
@@ -123,9 +123,13 @@ void edit_profile() {
     std::string username;
     while (true) {
         std::cout << "Pick a username [" << user.username << "]: ";
-        username = get_input(false);
-        if (!User::is_username_exist(username)) user.username = username;
-        if (username == "" || user.username == username) break;
+        username = get_input(true);
+        if (username == "" || username == user.username) {
+            break;
+        } else if (!User::is_username_exist(username)) {
+            user.username = username;
+            break;
+        }
         std::cout << "Username already taken." << std::endl;
     }
     
@@ -135,7 +139,7 @@ void edit_profile() {
 
 
 void change_password() {
-    auto user = User::users.at(user_index);
+    auto &user = User::users.at(user_index);
     
     std::string password;
     while (true) {
@@ -247,7 +251,7 @@ void admin_manage_medicines() {
                 try {
                     std::cout << "Enter index to edit: ";
                     index = std::stoi(get_input(false));
-                    if (index > indexes.size()) throw std::exception();
+                    if (index > indexes.size() || index <= 0) throw std::exception();
                 } catch (std::exception &e) {
                     std::cout << "Please input a valid index." << std::endl;
                     continue;
@@ -317,7 +321,7 @@ void admin_manage_medicines() {
                 try {
                     std::cout << "Enter index to delete: ";
                     index = std::stoi(get_input(false));
-                    if (index > indexes.size()) throw std::exception();
+                    if (index > indexes.size() || index <= 0) throw std::exception();
                 } catch (std::exception &e) {
                     std::cout << "Please input a valid index." << std::endl;
                     continue;
@@ -391,7 +395,7 @@ void customer_shop_medicines()
                 try {
                     std::cout << "Enter index to add: ";
                     index = std::stoi(get_input(false));
-                    if (index > indexes.size()) throw std::exception();
+                    if (index > indexes.size() || index <= 0) throw std::exception();
                 } catch (std::exception &e) {
                     std::cout << "Please input a valid index." << std::endl;
                     continue;
